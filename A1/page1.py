@@ -1,20 +1,30 @@
+import pandas as pd
 import streamlit as st
-from pymongo import MongoClient
+import mysql.connector
 
-# MongoDB connection
-client = MongoClient("mongodb://localhost:27017/")
-db = client["Test1"]
-collection = db["1Case"]
+# Connect to Amazon RDS Database
+connection = mysql.connector.connect(
+host='database-1.cdwumcckkqqt.us-east-1.rds.amazonaws.com',
+user='admin',
+password='amazonrds7245',
+database='gaia_benchmark_dataset_validation')
+
+cursor = connection.cursor()
+
+query = 'SELECT * FROM validation_table;'
+cursor.execute(query)
+validation_table = cursor.fetchall()
+st.session_state["results"] = validation_table
 
 def show():
     st.title("GAIA Benchmark Evaluation App")
 
-    # Fetch test cases from MongoDB
-    test_cases = collection.find({}, {"task_id": 1, "Question": 1})
-    test_case_options = {str(tc["task_id"]): tc["Question"] for tc in test_cases}
+    # Fetch test cases from Amazon RDS
+    test_cases = pd.DataFrame(validation_table,columns = cursor.column_names)
+    test_case_options = dict(zip(test_cases['serial_no'],test_cases['question']))
 
     # Dropdown for selecting test case
-    selected_test_case = st.selectbox("Select a Test Case:", options=list(test_case_options.keys()))
+    selected_test_case = st.selectbox("Select a Test Case:", options=test_case_options.keys(),key="select_test_case")
 
     # Display the selected question
     if selected_test_case:
@@ -23,9 +33,10 @@ def show():
 
     # Search button
     if st.button("Search"):
-        st.session_state["selected_question"] = selected_question
+        st.session_state["serial_no"] = selected_test_case
         st.session_state["page"] = "2_Test_Case"
 
     # Button to navigate to summary page
     if st.button("Go to Summary"):
         st.session_state["page"] = "summary"
+
