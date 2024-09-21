@@ -1,23 +1,30 @@
 import streamlit as st
+from db import DBConnection
 
 def show():
     st.title("GAIA Benchmark App - Assist LLM Page")
+    db = DBConnection.get_instance()
+    cursor = db.cursor
+
     
-    # Your code for page 3
-    # Example:
     st.write("This is Page 3")
 
     # Test case window
-    selected_question = st.session_state.get("selected_question", "No question selected")
-    st.write(f"Test Case: {selected_question}")
+    tc_result = st.session_state.get("tc_result")
+    st.write(f"Test Case: {tc_result[0][2]}")
+
     
     # Output window placeholder
     st.text_area("Input the steps:", "Generating New prompt...")
     
     # Correct and Wrong buttons
     if st.button("Correct"):
-        st.write("Correct clicked")  # Placeholder action
+        cursor.execute(f"UPDATE validation_table  SET validation_status = 2 WHERE serial_no = {tc_result[0][0]}")
+        db.connection.commit()
+        
     if st.button("Wrong"):
-        st.write("Correct clicked")  # Placeholder action
+        cursor.execute(f"UPDATE validation_table  SET validation_status = 3 WHERE serial_no = {tc_result[0][0]}")
+        db.connection.commit()
+        
     if st.button("Go to Home"):
         st.session_state["page"] = "Home"
