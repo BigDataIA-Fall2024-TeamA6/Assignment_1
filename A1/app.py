@@ -1,6 +1,4 @@
 import streamlit as st
-import pandas as pd
-
 
 # Set the page configuration only once, at the top of app.py
 st.set_page_config(page_title="GAIA Benchmark App", layout="wide")
