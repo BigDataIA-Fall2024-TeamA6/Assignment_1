@@ -16,17 +16,17 @@ def show():
     
 
     # Test case window
-    st.write(f"Selected Question: {tc_result[0][2]}")
+    st.write(f"Selected Question: {tc_result[0][3]}")
     
     # Output window placeholder
     st.text_area("Output", "LLM Output to be printed here")
 
 
-    st.write("Expected Output", f"{tc_result[0][3]}")
+    st.write("Expected Output", f"{tc_result[0][4]}")
     
     # Correct and Wrong buttons
     if st.button("Correct"):
-        cursor.execute(f"UPDATE validation_table  SET validation_status = 1 WHERE serial_no = {tc_result[0][0]}")
+        cursor.execute(f"UPDATE validation_table  SET validation_status = 1 WHERE serial_no = {tc_result[0][1]}")
         db.connection.commit()
         st.write("LLM Output Validated")
     if st.button("Wrong"):

@@ -13,7 +13,7 @@ class DBConnection:
             user='admin',
             password='amazonrds7245',
             database='gaia_benchmark_dataset_validation')
-            self.cursor = self.connection.cursor()
+            self.cursor = self.connection.cursor()           
 
             print("Connected to DB")
         else:
@@ -24,3 +24,4 @@ class DBConnection:
         if not DBConnection._instance:
             DBConnection()
         return DBConnection._instance
+    
