@@ -1,9 +1,4 @@
 import streamlit as st
-import pandas as pd
-# add_selectbox = st.sidebar.selectbox(
-#     'Page',
-#     ('Home', 'Page1', 'Page2', 'Summary')
-# )
 
 # Set the page configuration only once, at the top of app.py
 st.set_page_config(page_title="GAIA Benchmark App", layout="wide")
@@ -12,6 +7,7 @@ def main():
     # Import pages here (after setting the page config)
     import page1
     import page2
+    import page3
     import summary
 
     # Logic to navigate to different pages
