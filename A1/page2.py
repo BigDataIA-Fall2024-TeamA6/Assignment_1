@@ -34,7 +34,7 @@ def show():
     tc_result = cursor.fetchall()
 
     if tc_result:
-        st.write("Expected Output", f"{tc_result[0][3]}")
+        st.write("Expected Output:", f"{tc_result[0][4]}")
 
     # Correct and Wrong buttons to validate the LLM output
     if st.button("Correct"):
