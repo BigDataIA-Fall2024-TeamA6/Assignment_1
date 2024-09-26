@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 from openai import OpenAI
 import pandas as pd
@@ -10,13 +11,13 @@ from db import DBConnection
 # import zipfile
 # from PIL import Image
 # import pytesseract
-import os
 from pydub import AudioSegment
 import speech_recognition as sr
 import tiktoken  # OpenAI's token counter library
 from dotenv import load_dotenv
 
-load_dotenv() 
+load_dotenv()
+
 # Securely get environment variables
 api_key = os.getenv("OPENAI_API_KEY")  # OpenAI API key
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")  # AWS access key
@@ -86,16 +87,25 @@ def get_s3_file_content(s3_url):
         raise
 
 def show():
+    # Connect to Amazon RDS Database
+    try:
+        db = DBConnection.get_instance()
+        cursor = db.get_cursor()
+    except Exception as e:
+        st.error(f"Error connecting to the database: {e}")
+        return
+
+    # Fetch data from the database
+    cursor.execute('SELECT * FROM validation_table;')
+    validation_table = cursor.fetchall()
+    test_cases = pd.DataFrame(validation_table, columns=cursor.column_names)
+
     st.title("GAIA Benchmark Evaluation App")
 
-    # Fetch test cases from MongoDB
-    test_cases = collection.find({}, {"task_id": 1, "Question": 1})
-    test_case_options = {str(tc["task_id"]): tc["Question"] for tc in test_cases}
+    # Select the test case and store it in session state
+    test_case_options = dict(zip(test_cases['serial_no'], test_cases['question']))
+    selected_test_case = st.selectbox("Select a Test Case:", options=test_case_options.keys(), key="select_test_case")
 
-    # Dropdown for selecting test case
-    selected_test_case = st.selectbox("Select a Test Case:", options=list(test_case_options.keys()))
-
-    # Display the selected question
     if selected_test_case:
         selected_question = test_case_options[selected_test_case]
         file_path_series = test_cases[test_cases['serial_no'] == selected_test_case]['file_path']
@@ -150,7 +160,7 @@ def show():
 
                             # Navigate to page 2 to display the response
                             st.session_state["page"] = "2_Test_Case"
-                            
+
                         else:
                             st.error("Unexpected API response format. No choices found.")
                     else:
@@ -181,7 +191,7 @@ def show():
 
                                 # Navigate to page 2 to display the response
                                 st.session_state["page"] = "2_Test_Case"
-                                
+
                             else:
                                 st.error("Unexpected API response format. No choices found.")
 
@@ -210,7 +220,7 @@ def show():
 
                         # Navigate to page 2 to display the response
                         st.session_state["page"] = "2_Test_Case"
-                    
+
                     else:
                         st.error("Unexpected API response format. No choices found.")
                 except Exception as e:
@@ -219,4 +229,3 @@ def show():
         # Add the "Go to Summary" button
         if st.button("Go to Summary"):
             st.session_state["page"] = "summary"
-
