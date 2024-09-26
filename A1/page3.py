@@ -25,7 +25,8 @@ def show():
    
     # Output window placeholder
     st.text_area(f"Input the steps:", tc_result[0][7])
-   
+    st.write("Expected Output:", f"{tc_result[0][4]}")
+
     chatgpt_prompt = tc_result[0][3] + "\n" + tc_result[0][7]
  
     if st.button("Search"):
