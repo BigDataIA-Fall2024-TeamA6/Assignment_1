@@ -49,7 +49,7 @@ def show():
     file_path_counts = pd.DataFrame(result2, columns=["External File", "Count of Question Not Tested", "Count of Question Tested"])
 
     # Display the table for file_path and validation_status counts
-    st.subheader("File Path and Validation Status Summary")
+    st.subheader("Validation Status for Document-Linked Questions")
     st.table(file_path_counts)
 
     # Navigation buttons
