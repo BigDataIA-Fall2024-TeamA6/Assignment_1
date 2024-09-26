@@ -46,3 +46,7 @@ def show():
         # Store tc_result in session state to use in page 3
         st.session_state["tc_result"] = tc_result
         st.session_state["page"] = "3_Test_Case"
+
+    # Navigation buttons
+    if st.button("Go to Home"):
+        st.session_state["page"] = "Home"
