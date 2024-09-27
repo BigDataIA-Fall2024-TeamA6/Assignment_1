@@ -42,6 +42,12 @@ s3_client = boto3.client(
  
  
 # code to extract text from PDF
+def extract_text_from_pdf(content):
+    reader = PyPDF2.PdfReader(BytesIO(content))
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text()
+    return text
  
 def extract_text_from_pptx(content):
     presentation = Presentation(BytesIO(content))
@@ -129,7 +135,8 @@ def get_s3_file_content(s3_url):
             local_path = r"C:\Users\visho\Documents\BDIAProjects\Assignment1_Copy\Assignment_1\A1\data\downloaded_file.mp3"
             s3_client.download_file(bucket_name, object_key,local_path)
             return extract_text_from_audio(local_path)
-        
+        elif content_type == 'text/csv':
+            return pd.read_csv(content)        
         elif content_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
             return pd.read_excel(content.read())  # Handle .xlsx files
         elif content_type == 'application/pdf':
