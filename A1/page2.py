@@ -34,7 +34,7 @@ def show():
     tc_result = cursor.fetchall()
 
     if tc_result:
-        st.write("Expected Output", f"{tc_result[0][3]}")
+        st.write("Expected Output:", f"{tc_result[0][4]}")
 
     # Correct and Wrong buttons to validate the LLM output
     if st.button("Correct"):
@@ -46,4 +46,7 @@ def show():
         # Store tc_result in session state to use in page 3
         st.session_state["tc_result"] = tc_result
         st.session_state["page"] = "3_Test_Case"
-        st.experimental_rerun()
+
+    # Navigation buttons
+    if st.button("Go to Home"):
+        st.session_state["page"] = "Home"
