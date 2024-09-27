@@ -45,3 +45,6 @@ validation_table['annotator_metadata'] = validation_table['annotator_metadata'].
 engine = create_engine("mysql+mysqlconnector://admin:amazonrds7245@database-1.cdwumcckkqqt.us-east-1.rds.amazonaws.com/gaia_benchmark_dataset_validation")
 
 validation_table.to_sql(con = engine, name='validation_table',if_exists='replace')
+
+connection.commit()
+connection.close()
