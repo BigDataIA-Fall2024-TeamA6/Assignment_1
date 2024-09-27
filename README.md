@@ -62,17 +62,15 @@ The application allows:
 ## File Structure
 
 Assignment_1/
-│
-├── A1/
-│   ├── app.py                    # Main Streamlit application
-│   ├── page1.py                  # First page logic (Test case selection)
-│   ├── page2.py                  # Second page logic (Model evaluation)
-│   ├── page3.py                  # Third page logic (Feedback recording)
-│   ├── .env                      # Credentials for AWS and OpenAI
-├── architecture diagram/     # Contains the workflow diagram for the system
-├── scripts/                  # Contains Python scripts for data migration
-├── validation/               # Contains the data files for validation
-│
-├── README.md                     # Project documentation
-└── requirements.txt              # Dependencies for the project
+A1/
+    app.py: Main Streamlit application
+    page1.py: First page logic (Test case selection)
+    page2.py: Second page logic (Model evaluation)
+    page3.py: Third page logic (Feedback recording)
+    .env: Credentials for AWS and OpenAI
+architecture_diagram/: Contains the workflow diagram for the system
+scripts/: Contains Python scripts for data migration
+validation/: Contains the data files for validation
+README.md: Project documentation
+requirements.txt: Dependencies for the project
 
