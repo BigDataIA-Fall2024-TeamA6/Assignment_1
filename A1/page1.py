@@ -102,6 +102,7 @@ def extract_text_from_image(local_path):
    
 def analyze_image(local_path):
     try:
+        description = ""
         text = extract_text_from_image(local_path)
         if text:
             description += f"Here is th text from the image: '{text}'"
@@ -158,7 +159,7 @@ def get_s3_file_content(s3_url):
         st.write(f"Bucket: {bucket_name}, Key: {object_key}, File Extension: {content_type}")
  
         if content_type == 'audio/mp3':
-            local_path = r"D:\DAMG7245\Assignment_1\data\downloaded_file.mp3"
+            local_path = r".\data\downloaded_file.mp3"
             s3_client.download_file(bucket_name, object_key,local_path)
             return extract_text_from_audio(local_path)
         elif content_type == 'text/csv':
@@ -174,7 +175,7 @@ def get_s3_file_content(s3_url):
         elif content_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
             return extract_text_from_docx(content.read())
         elif content_type == 'image/png' or content_type == 'image/jpeg' or content_type == 'image/jpg':
-            local_path = r"C:\Users\visho\Documents\BDIAProjects\Assignment1_Copy\Assignment_1\A1\data\downloaded_file" +"."+ str(content_type.split("/")[1])
+            local_path = r".\data\downloaded_file" +"."+ str(content_type.split("/")[1])
             s3_client.download_file(bucket_name, object_key,local_path)
             return analyze_image(local_path)  # OCR for PNG/JPG
        
