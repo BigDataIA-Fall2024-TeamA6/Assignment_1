@@ -158,7 +158,7 @@ def get_s3_file_content(s3_url):
         st.write(f"Bucket: {bucket_name}, Key: {object_key}, File Extension: {content_type}")
  
         if content_type == 'audio/mp3':
-            local_path = r"C:\Users\visho\Documents\BDIAProjects\Assignment1_Copy\Assignment_1\A1\data\downloaded_file.mp3"
+            local_path = r"D:\DAMG7245\Assignment_1\data\downloaded_file.mp3"
             s3_client.download_file(bucket_name, object_key,local_path)
             return extract_text_from_audio(local_path)
         elif content_type == 'text/csv':
