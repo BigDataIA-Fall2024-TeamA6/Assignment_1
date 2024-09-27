@@ -21,6 +21,9 @@ def show():
     # Test case window
     tc_result = st.session_state.get("tc_result")
     st.write(f"Test Case: {tc_result[0][3]}")
+
+
+    
  
    
     # Output window placeholder
@@ -56,6 +59,7 @@ def show():
                     st.error(f"Error during OpenAI API call: {e}")
  
  
+
     # Correct and Wrong buttons
     if st.button("Correct"):
         cursor.execute(f"UPDATE validation_table  SET validation_status = 2 WHERE serial_no = {tc_result[0][1]}")
