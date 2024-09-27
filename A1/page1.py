@@ -23,9 +23,15 @@ import tiktoken  # OpenAI's token counter library
 load_dotenv()
 # Securely get environment variables
 api_key = os.getenv("OPENAI_API_KEY")  # OpenAI API key
+if api_key is None:
+ api_key = st.secrets["OPENAI_API_KEY"]
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")  # AWS access key
+if aws_access_key_id is None:
+aws_access_key_id = st.secrets["AWS_ACCESS_KEY_ID"]
 aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")  # AWS secret key
-aws_region = os.getenv("AWS_REGION", "us-east-1")  # AWS region, default to us-east-1
+if aws_secret_access_key is None:
+ api aws_secret_access_key = st.secrets["AWS_SECRET_ACCESS_KEY"]
+aws_region = "us-east-1"  # AWS region, default to us-east-1
  
 # Initialize OpenAI client with the API key
 client = OpenAI(api_key=api_key)
