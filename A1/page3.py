@@ -108,7 +108,7 @@ def show():
         if st.button("Wrong"):
             cursor.execute(f"UPDATE validation_table  SET validation_status = 3 WHERE serial_no = {tc_result[0][1]}")
             db.connection.commit()
-            
+                
  
     if st.button("Go to Home"):
         st.session_state["page"] = "Home"
