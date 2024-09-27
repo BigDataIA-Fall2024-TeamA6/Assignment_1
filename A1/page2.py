@@ -34,7 +34,7 @@ def show():
     tc_result = cursor.fetchall()
  
     if tc_result:
-        st.write("Expected Output", f"{tc_result[0][4]}")
+        st.write("Expected Output:", f"{tc_result[0][4]}")
  
         # Create two columns for the Correct and Wrong buttons
     col1, col2 = st.columns(2)
