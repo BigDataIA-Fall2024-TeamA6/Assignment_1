@@ -42,7 +42,9 @@ def show():
     st.text_area(f"Input the steps:", tc_result[0][7]) # Annotator_metadata
     st.write("Expected Output:", f"{tc_result[0][4]}") # Final Answer 
    
-    file_content = st.session_state.get('file_content')
+    file_content = st.session_state.get('file_content
+    if file_content is None:
+        file_content = ""
  
     if file_content is not None and isinstance(file_content, pd.DataFrame) and not file_content.empty:
         # If the DataFrame is not empty, convert it to a string or process it further
@@ -108,7 +110,7 @@ def show():
         if st.button("Wrong"):
             cursor.execute(f"UPDATE validation_table  SET validation_status = 3 WHERE serial_no = {tc_result[0][1]}")
             db.connection.commit()
-            st.write("LLM Output Failed")
+            
  
     if st.button("Go to Home"):
         st.session_state["page"] = "Home"

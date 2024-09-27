@@ -39,7 +39,27 @@ s3_client = boto3.client(
 )
  
 # Code to extract text from audio
+def extract_text_from_audio(local_path):
+    try:
+        # Convert MP3 to WAV using pydub
+        audio = AudioSegment.from_mp3(local_path)
+        wav_path = local_path.replace(".mp3", ".wav")
+        audio.export(wav_path, format="wav")
  
+        # Initialize recognizer
+        recognizer = sr.Recognizer()
+ 
+        # Read the WAV file
+        with sr.AudioFile(wav_path) as source:
+            audio_data = recognizer.record(source)
+ 
+        # Perform speech recognition
+        text = recognizer.recognize_google(audio_data)
+        return text
+ 
+    except Exception as e:
+        st.error(f"Error processing MP3 file: {e}")
+        return None 
  
 # code to extract text from PDF
 def extract_text_from_pdf(content):
@@ -59,7 +79,13 @@ def extract_text_from_pptx(content):
     return text
  
 # code to extract text from docx
- 
+def extract_text_from_docx(content):
+    doc = Document(BytesIO(content))
+    text = ""
+    for para in doc.paragraphs:
+        text += para.text + "\n"
+    return text
+
 def extract_text_from_image(local_path):
     try:
         reader = easyocr.Reader(['en'],gpu=True)
@@ -132,7 +158,7 @@ def get_s3_file_content(s3_url):
         st.write(f"Bucket: {bucket_name}, Key: {object_key}, File Extension: {content_type}")
  
         if content_type == 'audio/mp3':
-            local_path = r"C:\Users\visho\Documents\BDIAProjects\Assignment1_Copy\Assignment_1\A1\data\downloaded_file.mp3"
+            local_path = r"D:\DAMG7245\Assignment_1\data\downloaded_file.mp3"
             s3_client.download_file(bucket_name, object_key,local_path)
             return extract_text_from_audio(local_path)
         elif content_type == 'text/csv':
