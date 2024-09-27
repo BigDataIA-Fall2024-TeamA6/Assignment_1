@@ -1,0 +1,27 @@
+WE ATTEST THAT WE HAVEN’T USED ANY OTHER STUDENTS’ WORK IN OUR
+ASSIGNMENT AND ABIDE BY THE POLICIES LISTED IN THE STUDENT HANDBOOK
+Contribution:
+a. Sahiti Nallamolu: 33%
+b. Vishodhan Krishnan: 33%
+c. Vismay Devjee: 33%
+
+Contribution Timeline:
+
+Sahiti Nallamolu:
+    1. 09/19/24 - Amazon S3 setup; Moved data from huggingface to S3.
+    2. 09/23/24 - LLM Integration with Streamlit Page 1 and 2.
+    3. 09/25/24 - Populating unstructered data file path from S3 to RDS table for LLM access.
+    4. 09/26/24 - Functionality to parse files PDF, XLSX through LLM; Architecture Diagram.
+
+Vismay Devjee: 
+    1. 09/18/24 - Streamlit Base UI
+    2. 09/19/24 - UI Update
+    3. 09/25/24 - Updated LLM Integration on Page 3 of Streamlit
+    4. 09/26/24 - Made changes to Page 1 and 2 Streamlit; Summary Page Visualization; UI Fixes; Added File Parsing functionality for Audio, Docx files.
+
+Vishodhan Krishnan:
+    1. 09/21/24 - Streamlit to RDS Connection and RDS setup .
+    2. 09/25/24 - Moved GAIA data from huggingface to RDS; Validation table creation in RDS. 
+    3. 09/26/24 - RDS validation table and Streamlit response connection for metadata population and output validation - py script.
+    4. 09/26/24 - Funcationality for LLM parsing Image, CSV files.
+
