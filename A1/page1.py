@@ -186,9 +186,11 @@ def get_s3_file_content(s3_url):
             return analyze_image(local_path)  # OCR for PNG/JPG
        
        
-        else:
+         else:
             # Try to decode as UTF-8 if it's a plain text file
             try:
+                local_path = r".\data\downloaded_file" +"."+ str(content_type.split("/")[1])
+                s3_client.download_file(bucket_name, object_key,local_path)
                 with open(local_path, "r", encoding="utf-8") as f:
                     return f.read()
             except UnicodeDecodeError:
